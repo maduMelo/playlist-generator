@@ -28,7 +28,7 @@ function Auth() {
         const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
         const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
-        const scope = 'user-read-private user-read-email';
+        const scope = 'user-read-private user-read-email playlist-modify-public';
         const authUrl = new URL('https://accounts.spotify.com/authorize');
 
         window.localStorage.setItem('code_verifier', codeVerifier);
@@ -53,10 +53,7 @@ function Auth() {
     return (
         <div>
             <h1>Auth</h1>
-            {
-                !accessToken ? <button onClick={requestAuthorization}>Log in</button>
-                : <button onClick={redirectToApp}>Start</button>
-            }
+            <button onClick={requestAuthorization}>Log in</button>
         </div>
     );
 };
