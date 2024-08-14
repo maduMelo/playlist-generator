@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 
 import User from '../User';
+import TrackPreview from '../TrackPreview';
 
 function Main() {
     const accessToken = localStorage.getItem('access_token');
@@ -87,6 +88,29 @@ function Main() {
         if (accessToken) getProfile();
     }, [accessToken]);
 
+
+    // Temporary
+    const [track, setTrack] = useState(null);
+    const trackId = '5eTNdkstwKaNahHf41fJ9u'; // Hotter than hell
+
+    async function getTrack() {
+        const url = `https://api.spotify.com/v1/tracks/${trackId}`;
+
+        try {
+            const response = await fetch(url, {
+                headers: {
+                    Authorization: `Bearer ${accessToken}`
+                }
+            });
+            const result = await response.json();
+            setTrack(result);
+            console.log('Track', result);
+
+        } catch (error) {
+            console.error('Failed to get track', error);
+        }
+    };
+
     return (
         <div>
             <h1>Main Page</h1>
@@ -98,6 +122,9 @@ function Main() {
             <a href={`https://open.spotify.com/playlist/${playlistId}`} target="_blank" rel="noopener noreferrer">
                 Go to Playlist
             </a>
+
+            <button onClick={getTrack}>Get Track</button>
+            { track ? <TrackPreview track={track} /> : <p>No track</p> }
         </div>
     );
 };
