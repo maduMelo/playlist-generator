@@ -1,0 +1,30 @@
+.transparent-button {
+    background-color: transparent;
+    color: white;
+
+    font-family: sans-serif;
+
+    padding: 1.1rem 3rem;
+    border-radius: 6px;
+
+    font-size: .95rem;
+    font-weight: bold;
+
+    border: none;
+    cursor: pointer;
+
+}
+
+.transparent-button:hover {
+    background-color: rgba(255, 255, 255, 0.055);
+}
+
+.transparent-button-container {
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    min-width: 1rem;
+    min-height: 5rem;
+}

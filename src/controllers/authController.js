@@ -29,7 +29,7 @@ const authControllers = {
         const CLIENT_ID = process.env.REACT_APP_CLIENT_ID;
         const REDIRECT_URI = process.env.REACT_APP_REDIRECT_URI;
 
-        const scope = 'user-read-private user-read-email playlist-modify-public';
+        const scope = 'user-read-private user-read-email user-top-read playlist-modify-public';
         const authUrl = new URL('https://accounts.spotify.com/authorize');
 
         window.localStorage.setItem('code_verifier', codeVerifier);

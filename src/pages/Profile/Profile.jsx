@@ -6,6 +6,7 @@ import spotifyControllers from "../../controllers/spotifyControllers";
 import "./Profile.css";
 
 import User from "./components/User";
+import Button from "../../components/Button";
 
 
 function Profile() {
@@ -21,9 +22,12 @@ function Profile() {
     return (
         <div>
             {data ? <User data={data} /> : <p>Não gerou token</p>}
-            <button onClick={() => { navigate('/profile/app', { state: data.id }) }}>
-                Gerar Playlist
-            </button>
+
+            <Button 
+                text="Gerar Playlist" 
+                buttonClass="green" 
+                action={() => { navigate('/profile/app', { state: data.id }) }}
+            />
         </div>
     );
 };
