@@ -54,6 +54,58 @@ const spotifyServices = {
         const data = await response.json();
         return data;
     },
+
+    getFollowedArtists: async (accessToken) => {
+        const url = 'https://api.spotify.com/v1/me/following?type=artist';
+
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    },
+
+    getArtistTopTracks: async (accessToken, artistID) => {
+        const url = `https://api.spotify.com/v1/artists/${artistID}/top-tracks?market=BR`;
+        
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    },
+
+    getRelatedArtists: async (accessToken, artistID) => {
+        const url = `https://api.spotify.com/v1/artists/${artistID}/related-artists`;
+
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    },
+
+    getRecommendations: async (accessToken, seedArtists, seedGenres, seedTracks) => {
+        const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seedArtists}&seed_genres=${seedGenres}&seed_tracks=${seedTracks}`;
+
+        const response = await fetch(url, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+
+        const data = await response.json();
+        return data;
+    },
 };
 
 
