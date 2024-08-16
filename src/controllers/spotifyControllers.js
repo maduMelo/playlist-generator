@@ -1,7 +1,7 @@
 import spotifyServices from '../services/spotifyServices';
 
 const spotifyControllers = {
-    handleProfileRequest: async (accessToken, saveProfileInfo) => {
+    getProfile: async (accessToken, saveProfileInfo) => {
         const url = 'https://api.spotify.com/v1/me';
 
         try {
@@ -11,7 +11,7 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to request profile information', error) };
     },
 
-    handlePlaylistCreation: async (userID, savePlaylistId, accessToken, playlistConfig) => {
+    createPlaylist: async (userID, savePlaylistId, accessToken, playlistConfig) => {
         const url = `https://api.spotify.com/v1/users/${userID}/playlists`;
 
         try {
@@ -21,7 +21,7 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to create playlist', error) };
     },
 
-    handleTracksAddition: async (accessToken, playlistID, tracksIDs) => {
+    addTracksOnPlaylist: async (accessToken, playlistID, tracksIDs) => {
         const url = `https://api.spotify.com/v1/playlists/${playlistID}/tracks`;
 
         try {
@@ -30,17 +30,18 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to add tracks', error) };
     },
 
-    handleTrackRequest: async (accessToken, trackID, saveTrack) => {
+    // Not using this function currently
+    getTracks: async (accessToken, trackID) => {
         const url = `https://api.spotify.com/v1/tracks/${trackID}`;
 
         try {
             const data = await spotifyServices.GETRequest(accessToken, url);
-            if (data) saveTrack(data);
+            if (data) return data;
         }
         catch (error) { console.error('Failed to get track', error) };
     },
 
-    handleGetFollowedArtists: async (accessToken) => {
+    getFollowedArtists: async (accessToken) => {
         const url = 'https://api.spotify.com/v1/me/following?type=artist';
 
         try {
@@ -50,7 +51,8 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get followed artists', error) };
     },
 
-    handleTopTracksRequest: async (accessToken, artistID, saveTopTracks) => {
+    // Not using this function currently
+    getTopTracks: async (accessToken, artistID, saveTopTracks) => {
         const url = `https://api.spotify.com/v1/artists/${artistID}/top-tracks?market=BR`;
 
         try {
@@ -60,7 +62,7 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get top tracks', error) };
     },
 
-    handleRelatedArtistsRequest: async (accessToken, artistID) => {
+    getRelatedArtists: async (accessToken, artistID) => {
         const url = `https://api.spotify.com/v1/artists/${artistID}/related-artists`;
 
         try {
@@ -70,7 +72,7 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get related artists', error) };
     },
 
-    handleRecommendationsRequest: async (accessToken, seedArtists, seedGenres, seedTracks) => {
+    getRecommendations: async (accessToken, seedArtists, seedGenres, seedTracks) => {
         const url = `https://api.spotify.com/v1/recommendations?seed_artists=${seedArtists}&seed_genres=${seedGenres}&seed_tracks=${seedTracks}`;
 
         try {

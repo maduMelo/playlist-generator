@@ -16,7 +16,7 @@ function Profile() {
     const [data, setData] = useState(null);
 
     useEffect(() => {
-        if (accessToken) spotifyControllers.handleProfileRequest(accessToken, setData);
+        if (accessToken) spotifyControllers.getProfile(accessToken, setData);
     }, [accessToken]);
 
     return (

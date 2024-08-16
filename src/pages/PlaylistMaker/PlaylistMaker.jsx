@@ -39,28 +39,28 @@ function PlaylistMaker() {
 
 
     async function createPlaylist() {
-        await spotifyControllers.handlePlaylistCreation(userID, setPlaylistId, accessToken, playlistConfig);
+        await spotifyControllers.createPlaylist(userID, setPlaylistId, accessToken, playlistConfig);
     };
 
     async function addTracks() {
-        await spotifyControllers.handleTracksAddition(accessToken, playlistId, tracks);
+        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistId, tracks);
     };
 
 
     // Montando o monstrinho
     async function getTracksSuggestions() {
         // 3 artists
-        const myArtistsIDs = await spotifyControllers.handleGetFollowedArtists(accessToken);
+        const myArtistsIDs = await spotifyControllers.getFollowedArtists(accessToken);
 
         const relatedArtistsPromises = await myArtistsIDs.map(async artistID => {
-            return await spotifyControllers.handleRelatedArtistsRequest(accessToken, artistID);
+            return await spotifyControllers.getRelatedArtists(accessToken, artistID);
         });
 
         // 3 arrays with 5 artists each
         const relatedArtists = await Promise.all(relatedArtistsPromises); // add error handling
 
         const recommendationsPromises = relatedArtists.map(async (relatedArtistsIDs) => {
-            return await spotifyControllers.handleRecommendationsRequest(accessToken, relatedArtistsIDs.join(','), '', '');
+            return await spotifyControllers.getRecommendations(accessToken, relatedArtistsIDs.join(','), '', '');
         });
 
         // 3 arrays with the objetc of the tracks that have preview url
