@@ -32,10 +32,10 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get track', error) };
     },
 
-    handleGetFollowedArtists: async (accessToken, saveArtistsInfo) => {
+    handleGetFollowedArtists: async (accessToken) => {
         try {
             const data = await spotifyServices.getFollowedArtists(accessToken);
-            return data.artists.items.slice(9, 14).map(artist => artist.id);
+            return data.artists.items.slice(4, 7).map(artist => artist.id);
         }
         catch (error) { console.error('Failed to get followed artists', error) };
     },
@@ -48,20 +48,18 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get top tracks', error) };
     },
 
-    handleRelatedArtistsRequest: async (accessToken, artistID, saveRelatedArtists) => {
+    handleRelatedArtistsRequest: async (accessToken, artistID) => {
         try {
             const data = await spotifyServices.getRelatedArtists(accessToken, artistID);
-            console.log(data);
-            if (data) saveRelatedArtists(data);
+            return data.artists.slice(0, 5).map(artist => artist.id);
         }
         catch (error) { console.error('Failed to get related artists', error) };
     },
 
-    handleRecommendationsRequest: async (accessToken, seedArtists, seedGenres, seedTracks, saveRecommendations) => {
+    handleRecommendationsRequest: async (accessToken, seedArtists, seedGenres, seedTracks) => {
         try {
             const data = await spotifyServices.getRecommendations(accessToken, seedArtists, seedGenres, seedTracks);
-            console.log(data);
-            if (data) saveRecommendations(data);
+            return data.tracks.filter(track => track.preview_url !== null);
         }
         catch (error) { console.error('Failed to get recommendations', error) };
     },

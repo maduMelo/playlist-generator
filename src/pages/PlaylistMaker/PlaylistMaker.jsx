@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import './PlaylistMaker.css';
@@ -14,6 +14,10 @@ function PlaylistMaker() {
 
     const accessToken = localStorage.getItem('access_token');
 
+    const [suggestedTracks, setSuggestedTracks] = useState([]);
+    const [track, setTrack] = useState(false); // Temporary
+    
+
 
     // Creating playlist ---------------------------------------------
 
@@ -23,7 +27,6 @@ function PlaylistMaker() {
         public: true
     }); // Temporary
     const [playlistId, setPlaylistId] = useState(''); // Temporary
-
 
     // Adding track --------------------------------------------------
 
@@ -35,19 +38,6 @@ function PlaylistMaker() {
     ]; // Temporary
 
 
-    // Temporary
-    const [track, setTrack] = useState(null);
-    const trackId = '5eTNdkstwKaNahHf41fJ9u'; // Hotter than hell
-
-
-    // Getting my followed artists ----------------------------------------
-    const [artists, setArtists] = useState([]);
-    // 4dpARuHxo51G3z768sgnrY - Adele
-    const [artistTopTracks, setArtistTopTracks] = useState([]);
-    const [relatedArtists, setRelatedArtists] = useState([]);
-    const [recommendations, setRecommendations] = useState([]);
-
-
     async function createPlaylist() {
         await spotifyControllers.handlePlaylistCreation(userID, setPlaylistId, accessToken, playlistConfig);
     };
@@ -56,26 +46,31 @@ function PlaylistMaker() {
         await spotifyControllers.handleTracksAddition(accessToken, playlistId, tracks);
     };
 
-    async function getTrackPreview() {
-        await spotifyControllers.handleTrackRequest(accessToken, trackId, setTrack);
-    };
 
-    async function getMyArtists() {
-        await spotifyControllers.handleGetFollowedArtists(accessToken, setArtists);
-    };
+    // Montando o monstrinho
+    async function getTracksSuggestions() {
+        // 3 artists
+        const myArtistsIDs = await spotifyControllers.handleGetFollowedArtists(accessToken);
 
-    async function getRelatedArtists() {
-        await spotifyControllers.handleRelatedArtistsRequest(accessToken, '4K9OTkRXEFL6NDXFTqVmq9', setRelatedArtists);
-    };
+        const relatedArtistsPromises = await myArtistsIDs.map(async artistID => {
+            return await spotifyControllers.handleRelatedArtistsRequest(accessToken, artistID);
+        });
 
-    async function getRecommendations() {
-        await spotifyControllers.handleRecommendationsRequest(accessToken, '6Gi8ZaXGx8MK79HwzXpuVZ,6RHKEd9dpzQ4c09x8Zdaxu,6bh228LGC3eAzbplPWV02r,2LuHL7im4aCEmfOlD4rxBC,0xu4jAQQv7ZAqvFGdc9HgP', '', '', setRecommendations);
-    };
+        // 3 arrays with 5 artists each
+        const relatedArtists = await Promise.all(relatedArtistsPromises); // add error handling
 
-    async function getArtistTopTracks() {
-        await spotifyControllers.handleTopTracksRequest(accessToken, '4dpARuHxo51G3z768sgnrY', setArtistTopTracks);
-    };
+        const recommendationsPromises = relatedArtists.map(async (relatedArtistsIDs) => {
+            return await spotifyControllers.handleRecommendationsRequest(accessToken, relatedArtistsIDs.join(','), '', '');
+        });
 
+        // 3 arrays with the objetc of the tracks that have preview url
+        const suggestedTracksList = await Promise.all(recommendationsPromises); // add error handling
+
+        // List of tracks (objects)
+        setSuggestedTracks(suggestedTracksList.flat());
+        setTrack(true);
+    };
+    
 
     return (
         <div>
@@ -83,16 +78,18 @@ function PlaylistMaker() {
 
             <button onClick={createPlaylist}>Create Playlist</button>
             <button onClick={addTracks}>Add Tracks</button>
-            <button onClick={getMyArtists}>Get My Artists</button>
-            <button onClick={getRelatedArtists}>Get related artists</button>
-            <button onClick={getRecommendations}>Get recommendations</button>
+            <button onClick={getTracksSuggestions}>TESTE</button>
 
             <a href={`https://open.spotify.com/playlist/${playlistId}`} target="_blank" rel="noopener noreferrer">
                 Go to Playlist
             </a>
+            
 
-            <button onClick={getTrackPreview}>Get Track</button>
-            {track ? <TrackPreview track={track} /> : <p>No track</p>}
+            {
+                track ?
+                suggestedTracks.slice(0, 3).map(track => <TrackPreview key={track.id} track={track} />) :
+                <p>No tracks</p>
+            }
         </div>
     );
 };
