@@ -1,0 +1,67 @@
+.track-preview-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+
+    background-color: #1f1f1f;
+    padding: 1rem;
+    border-radius: 4%;
+}
+
+.img-player-container {
+    position: relative;
+}
+
+.track-preview-container img {
+    width: 16rem;
+    height: 16rem;
+    border-radius: 4%;
+}
+
+.track-info {
+    width: 16rem;
+}
+
+.track-name {
+    font-size: 1.3rem;
+    margin-bottom: 0;
+
+    word-wrap: break-word;
+    white-space: normal;
+}
+
+.track-artists {
+    color: rgb(185, 185, 185);
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.play-button {
+    position: absolute;
+    bottom: .8rem;
+    right: .5rem;
+
+    background-color: #1db954;
+    color: black;
+
+    width: 3rem;
+    height: 3rem;
+
+    padding: .2rem;
+    
+    border: none;
+    border-radius: 50%;
+    
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+
+.play-button:hover {
+    background-color: #1ed760;
+}
+
+.track-preview-container audio {
+    display: none;
+}

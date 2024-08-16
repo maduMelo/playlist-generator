@@ -31,7 +31,7 @@ const spotifyControllers = {
     },
 
     // Not using this function currently
-    getTracks: async (accessToken, trackID) => {
+    getTrack: async (accessToken, trackID) => {
         const url = `https://api.spotify.com/v1/tracks/${trackID}`;
 
         try {

@@ -37,6 +37,13 @@ function PlaylistMaker() {
         'spotify:track:6dOtVTDdiauQNBQEDOtlAB'
     ]; // Temporary
 
+    const pretendTrack = {
+        name: 'Deixa (feat. Ana Gabriela) - Ao Vivo',
+        album: { images: [ null, { url: 'https://i.scdn.co/image/ab67616d00001e024de739135ec975b47e65cddd' } ] },
+        artists: [ { name: 'Madu' }, { name: 'Ana Gabriela' }, { name: 'Jão' } ],
+        preview_url: 'https://p.scdn.co/mp3-preview/8eae5b4d3281ab73a9713f571ca6dfffb7d40480?cid=c1afb4462ef3439f84d46b1a83b9b505'
+    }; // Temporary
+
 
     async function createPlaylist() {
         await spotifyControllers.createPlaylist(userID, setPlaylistId, accessToken, playlistConfig);
@@ -84,7 +91,6 @@ function PlaylistMaker() {
                 Go to Playlist
             </a>
             
-
             {
                 track ?
                 suggestedTracks.slice(0, 3).map(track => <TrackPreview key={track.id} track={track} />) :
@@ -95,3 +101,11 @@ function PlaylistMaker() {
 };
 
 export default PlaylistMaker;
+
+
+/*
+<TrackPreview track={pretendTrack} />
+
+
+
+*/
