@@ -11,12 +11,12 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to request profile information', error) };
     },
 
-    createPlaylist: async (userID, savePlaylistId, accessToken, playlistConfig) => {
+    createPlaylist: async (accessToken, userID, playlistConfig) => {
         const url = `https://api.spotify.com/v1/users/${userID}/playlists`;
 
         try {
             const data = await spotifyServices.POSTRequest(accessToken, url, JSON.stringify(playlistConfig));
-            if (data) savePlaylistId(data.id);
+            if (data) return data.id;
         }
         catch (error) { console.error('Failed to create playlist', error) };
     },

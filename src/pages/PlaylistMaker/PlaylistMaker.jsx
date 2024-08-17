@@ -15,8 +15,7 @@ function PlaylistMaker() {
     const accessToken = localStorage.getItem('access_token');
 
     const [suggestedTracks, setSuggestedTracks] = useState([]); // State to store the suggested tracks
-
-    const [track, setTrack] = useState(false); // State to tell if the suggetions are ready
+    const [isPlaylistDone, setIsPlaylistDone] = useState(false); // State to tell if the suggetions are ready
 
     const [playlist, setPlaylist] = useState([]);
     const [playlistID, setPlaylistID] = useState(null);
@@ -43,8 +42,27 @@ function PlaylistMaker() {
 
         // List of tracks (objects)
         setSuggestedTracks(suggestedTracksList.flat());
-        setTrack(true);
         console.log('Gerou sugestões!');
+    };
+
+    async function createPlaylist() {
+        const body = {
+            name: 'Mulher, pelo amor de Deus...',
+            description: 'Playlist created by Playlist Maker',
+            public: true
+        };
+
+        const playlistID = await spotifyControllers.createPlaylist(accessToken, userID, body);
+        setPlaylistID(playlistID);
+
+        const tracksIDs = playlist.map(track => `spotify:track:${track.id}`);
+
+        console.log('ID', playlistID);
+        console.log('Tracks IDs', tracksIDs);
+
+        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksIDs);
+
+        setIsPlaylistDone(true);
     };
     
     const addTrackOnPlaylist = () => {
@@ -62,7 +80,6 @@ function PlaylistMaker() {
         //getTracksSuggestions();
     }, []);
 
-
     return (
         <div>
             <h1>Playlist Maker Page</h1>
@@ -75,23 +92,20 @@ function PlaylistMaker() {
             <button onClick={rejectTrack}>Reject Track</button>
             <button onClick={addTrackOnPlaylist}>Add on Playlist</button>
 
+            {
+                playlist.length > 0 && !isPlaylistDone &&
+                <button onClick={createPlaylist}>Create Playlist</button>
+            }
 
+            {
+                isPlaylistDone &&
+                <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
+                    Go to Playlist
+                </a>
+            }
             
         </div>
     );
 };
 
 export default PlaylistMaker;
-
-
-/*
-
-<button onClick={createPlaylist}>Create Playlist</button>
-            <button onClick={addTracks}>Add Tracks</button>
-            <button onClick={getTracksSuggestions}>TESTE</button>
-
-            <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
-                Go to Playlist
-            </a>
-
-*/
