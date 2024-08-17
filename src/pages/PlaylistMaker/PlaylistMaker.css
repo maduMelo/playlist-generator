@@ -1,0 +1,49 @@
+.playlist-maker-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    height: 100vh;
+    width: 100vw;
+}
+
+.playlist-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: start;
+
+    width: 22vw;
+    height: 90%;
+
+    overflow: scroll;
+}
+
+.playlist-container::-webkit-scrollbar {
+    display: none;
+}
+
+.playlist-maker-center {
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    height: 90%;
+
+    flex: 3;
+}
+
+.playlist-maker-right {
+    border: 1px solid lightblue;
+
+    height: 90%;
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+
+    flex: 1;
+}

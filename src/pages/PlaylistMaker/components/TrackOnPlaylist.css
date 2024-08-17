@@ -1,0 +1,40 @@
+.track-on-playlist {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    
+    gap: .6rem;
+
+    width: 90%;
+    padding: .55rem 1rem;
+}
+
+.track-on-playlist:hover {
+    background-color: #282828;
+}
+
+.track-on-playlist img {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 10%;
+}
+
+.track-on-playlist-info {
+    width: 55%;
+
+    display: flex;
+    flex-direction: column;
+    gap: .2rem;
+}
+
+.track-on-playlist p, .track-on-playlist h5 {
+    margin: 0;
+
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.track-on-playlist p {
+    font-size: .8rem;
+}

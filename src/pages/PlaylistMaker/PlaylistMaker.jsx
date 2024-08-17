@@ -2,8 +2,10 @@ import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 
 import './PlaylistMaker.css';
+import './components/TrackOnPlaylist.css';
 
 import TrackPreview from './components/TrackPreview';
+import TrackOnPlaylist from './components/TrackOnPlaylist';
 
 import spotifyControllers from '../../controllers/spotifyControllers';
 
@@ -51,17 +53,12 @@ function PlaylistMaker() {
             description: 'Playlist created by Playlist Maker',
             public: true
         };
-
         const playlistID = await spotifyControllers.createPlaylist(accessToken, userID, body);
-        setPlaylistID(playlistID);
-
+        
         const tracksIDs = playlist.map(track => `spotify:track:${track.id}`);
-
-        console.log('ID', playlistID);
-        console.log('Tracks IDs', tracksIDs);
-
         await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksIDs);
-
+        
+        setPlaylistID(playlistID);
         setIsPlaylistDone(true);
     };
     
@@ -81,28 +78,42 @@ function PlaylistMaker() {
     }, []);
 
     return (
-        <div>
-            <h1>Playlist Maker Page</h1>
-            {
-                suggestedTracks.length > 0 ?
-                <TrackPreview track={suggestedTracks[0]} /> :
-                <p>Searching for tracks you might like it...</p>
-            }
+        <div className='playlist-maker-container'>
+
+            <div className='playlist-container'>
+                { playlist.map((track, index) =>  <TrackOnPlaylist key={index} order={index} track={track} />) }
+            </div>
+
+            <div className='playlist-maker-center'>
+                <h1>Playlist Maker Page</h1>
+
+                {
+                    suggestedTracks.length > 0 ?
+                    <TrackPreview track={suggestedTracks[0]} /> :
+                    <p>Searching for tracks you might like it...</p>
+                }
+
+                <div>
+                    <button onClick={rejectTrack}>Reject Track</button>
+                    <button onClick={addTrackOnPlaylist}>Add on Playlist</button>
+                </div>
+            </div>
             
-            <button onClick={rejectTrack}>Reject Track</button>
-            <button onClick={addTrackOnPlaylist}>Add on Playlist</button>
+            <div className='playlist-maker-right'>
+                <input type="text" />
 
-            {
-                playlist.length > 0 && !isPlaylistDone &&
-                <button onClick={createPlaylist}>Create Playlist</button>
-            }
+                {
+                    playlist.length > 0 && !isPlaylistDone &&
+                    <button onClick={createPlaylist}>Create Playlist</button>
+                }
 
-            {
-                isPlaylistDone &&
-                <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
-                    Go to Playlist
-                </a>
-            }
+                {
+                    isPlaylistDone &&
+                    <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
+                        Go to Playlist
+                    </a>
+                }
+            </div>
             
         </div>
     );

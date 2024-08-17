@@ -46,8 +46,6 @@ function TrackPreview({ track }) {
                 <h3 className='track-name'>{track.name}</h3>
                 <p className='track-artists'>{artists}</p>
             </div>
-
-            
         </div>
     );
 };

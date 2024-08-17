@@ -9,6 +9,10 @@
     border-radius: 4%;
 }
 
+.track-preview-container:hover {
+    background-color: #282828;
+}
+
 .img-player-container {
     position: relative;
 }
