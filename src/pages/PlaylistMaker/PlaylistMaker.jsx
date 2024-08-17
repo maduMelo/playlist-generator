@@ -65,16 +65,25 @@ function PlaylistMaker() {
     const addTrackOnPlaylist = () => {
         const track = suggestedTracks[0];
         setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
-        setPlaylist([...playlist, track]);
+        setPlaylist(prevPlaylist => [...prevPlaylist, track]);
     };
 
     const rejectTrack = () => {
         setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
-        console.log(playlist);
+    };
+
+    const handleKeyDown = (event) => {
+        if (event.key === 'ArrowRight') document.getElementById('add').click();
+        else if (event.key === 'ArrowLeft') document.getElementById('reject').click();
     };
 
     useEffect(() => {
         //getTracksSuggestions();
+
+        window.addEventListener('keydown', handleKeyDown);
+        return () => {
+            window.removeEventListener('keydown', handleKeyDown);
+        };
     }, []);
 
     return (
@@ -94,8 +103,8 @@ function PlaylistMaker() {
                 }
 
                 <div>
-                    <button onClick={rejectTrack}>Reject Track</button>
-                    <button onClick={addTrackOnPlaylist}>Add on Playlist</button>
+                    <button onClick={rejectTrack} id='reject'>Reject Track</button>
+                    <button onClick={addTrackOnPlaylist} id='add'>Add on Playlist</button>
                 </div>
             </div>
             
