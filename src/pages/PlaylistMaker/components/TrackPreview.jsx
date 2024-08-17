@@ -3,17 +3,33 @@ import './TrackPreview.css';
 import { useState, useEffect } from 'react';
 
 function TrackPreview({ track }) {
-    const [isPlaying, setIsPlaying] = useState(true);
-    const handlePlay = () => {
-        const audio = document.getElementById('audio-player');
+    const [audio, setAudio] = useState(null);
+    const [isPlaying, setIsPlaying] = useState(false);
+    const artists = track.artists.map(artist => artist.name).join(', ');
 
+    const handlePlay = () => {
         if (isPlaying) audio.pause()
         else audio.play();
 
         setIsPlaying(!isPlaying);
     };
 
-    const artists = track.artists.map(artist => artist.name).join(', ');
+    useEffect(() => {
+        if (audio) {
+            audio.pause();
+            audio.remove()
+        };
+
+        const newAudio = new Audio(track.preview_url);
+        setAudio(newAudio);
+
+        if (isPlaying) newAudio.play();
+
+        return () => {
+            newAudio.pause();
+            newAudio.remove();
+        };
+    }, [track]);
 
     return (
         <div className="track-preview-container">
@@ -22,7 +38,7 @@ function TrackPreview({ track }) {
                 {
                     isPlaying ? 
                     <button className='play-button' onClick={handlePlay}>&#10073;&#10073;</button> : 
-                    <button className='play-button' onClick={handlePlay}>&#9658;</button>
+                    <button className='play-button' onClick={handlePlay}>&#9654;</button>
                 }
             </div>
 
@@ -31,10 +47,7 @@ function TrackPreview({ track }) {
                 <p className='track-artists'>{artists}</p>
             </div>
 
-            <audio controls autoPlay id='audio-player'>
-                <source src={track.preview_url} type="audio/mpeg" />
-                Your browser does not support the audio element.
-            </audio>
+            
         </div>
     );
 };

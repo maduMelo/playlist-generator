@@ -14,44 +14,12 @@ function PlaylistMaker() {
 
     const accessToken = localStorage.getItem('access_token');
 
-    const [suggestedTracks, setSuggestedTracks] = useState([]);
-    const [track, setTrack] = useState(false); // Temporary
-    
+    const [suggestedTracks, setSuggestedTracks] = useState([]); // State to store the suggested tracks
 
+    const [track, setTrack] = useState(false); // State to tell if the suggetions are ready
 
-    // Creating playlist ---------------------------------------------
-
-    const [playlistConfig, setPlaylistConfig] = useState({
-        name: 'My Playlist From React',
-        description: 'First playlist created with React by me to test for my app',
-        public: true
-    }); // Temporary
-    const [playlistId, setPlaylistId] = useState(''); // Temporary
-
-    // Adding track --------------------------------------------------
-
-    const tracks = [
-        'spotify:track:1QEt5w1GmR7opjz1kLUXbU',
-        'spotify:track:5M4Dxko4d3ja1CnIUmYVqA',
-        'spotify:track:78tx7xOBWGrPZacg3tYdX3',
-        'spotify:track:6dOtVTDdiauQNBQEDOtlAB'
-    ]; // Temporary
-
-    const pretendTrack = {
-        name: 'Deixa (feat. Ana Gabriela) - Ao Vivo',
-        album: { images: [ null, { url: 'https://i.scdn.co/image/ab67616d00001e024de739135ec975b47e65cddd' } ] },
-        artists: [ { name: 'Madu' }, { name: 'Ana Gabriela' }, { name: 'Jão' } ],
-        preview_url: 'https://p.scdn.co/mp3-preview/8eae5b4d3281ab73a9713f571ca6dfffb7d40480?cid=c1afb4462ef3439f84d46b1a83b9b505'
-    }; // Temporary
-
-
-    async function createPlaylist() {
-        await spotifyControllers.createPlaylist(userID, setPlaylistId, accessToken, playlistConfig);
-    };
-
-    async function addTracks() {
-        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistId, tracks);
-    };
+    const [playlist, setPlaylist] = useState([]);
+    const [playlistID, setPlaylistID] = useState(null);
 
 
     // Montando o monstrinho
@@ -76,26 +44,39 @@ function PlaylistMaker() {
         // List of tracks (objects)
         setSuggestedTracks(suggestedTracksList.flat());
         setTrack(true);
+        console.log('Gerou sugestões!');
     };
     
+    const addTrackOnPlaylist = () => {
+        const track = suggestedTracks[0];
+        setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
+        setPlaylist([...playlist, track]);
+    };
+
+    const rejectTrack = () => {
+        setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
+        console.log(playlist);
+    };
+
+    useEffect(() => {
+        //getTracksSuggestions();
+    }, []);
+
 
     return (
         <div>
             <h1>Playlist Maker Page</h1>
-
-            <button onClick={createPlaylist}>Create Playlist</button>
-            <button onClick={addTracks}>Add Tracks</button>
-            <button onClick={getTracksSuggestions}>TESTE</button>
-
-            <a href={`https://open.spotify.com/playlist/${playlistId}`} target="_blank" rel="noopener noreferrer">
-                Go to Playlist
-            </a>
-            
             {
-                track ?
-                suggestedTracks.slice(0, 3).map(track => <TrackPreview key={track.id} track={track} />) :
-                <p>No tracks</p>
+                suggestedTracks.length > 0 ?
+                <TrackPreview track={suggestedTracks[0]} /> :
+                <p>Searching for tracks you might like it...</p>
             }
+            
+            <button onClick={rejectTrack}>Reject Track</button>
+            <button onClick={addTrackOnPlaylist}>Add on Playlist</button>
+
+
+            
         </div>
     );
 };
@@ -104,8 +85,13 @@ export default PlaylistMaker;
 
 
 /*
-<TrackPreview track={pretendTrack} />
 
+<button onClick={createPlaylist}>Create Playlist</button>
+            <button onClick={addTracks}>Add Tracks</button>
+            <button onClick={getTracksSuggestions}>TESTE</button>
 
+            <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
+                Go to Playlist
+            </a>
 
 */
