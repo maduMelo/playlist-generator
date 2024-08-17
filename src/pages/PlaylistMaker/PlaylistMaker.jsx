@@ -3,6 +3,8 @@ import { useLocation } from 'react-router-dom';
 
 import './PlaylistMaker.css';
 import './components/TrackOnPlaylist.css';
+import rejectLogo from '../../assets/reject.png';
+import addLogo from '../../assets/add.png';
 
 import TrackPreview from './components/TrackPreview';
 import TrackOnPlaylist from './components/TrackOnPlaylist';
@@ -78,7 +80,7 @@ function PlaylistMaker() {
     };
 
     useEffect(() => {
-        //getTracksSuggestions();
+        getTracksSuggestions();
 
         window.addEventListener('keydown', handleKeyDown);
         return () => {
@@ -102,9 +104,13 @@ function PlaylistMaker() {
                     <p>Searching for tracks you might like it...</p>
                 }
 
-                <div>
-                    <button onClick={rejectTrack} id='reject'>Reject Track</button>
-                    <button onClick={addTrackOnPlaylist} id='add'>Add on Playlist</button>
+                <div className='playilst-modifiers-container'>
+                    <button onClick={rejectTrack} id='reject'>
+                        <img src={rejectLogo} alt="Reject" />
+                    </button>
+                    <button onClick={addTrackOnPlaylist} id='add'>
+                        <img src={addLogo} alt="Add" />
+                    </button>
                 </div>
             </div>
             
