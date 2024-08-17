@@ -64,6 +64,7 @@
 
 .play-button:hover {
     background-color: #1ed760;
+    transform: scale(1.02);
 }
 
 .track-preview-container audio {

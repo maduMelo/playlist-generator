@@ -54,12 +54,12 @@
 
 #reject:hover {
     background-color: #ed2c3f;
-    transform: scale(1.07);
+    transform: scale(1.04);
 }
 
 #add:hover {
     background-color: #1ed760;
-    transform: scale(1.07);
+    transform: scale(1.04);
 }
 
 #add:active, #reject:active {

@@ -18,16 +18,5 @@
     background-color: #1fdf64;
     color: #000000;
 
-    padding: .95rem 8.1rem;
-    font-size: .96rem;
-}
-
-.green-button-container {
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    min-width: 24rem;
-    min-height: 5rem;
+    transform: scale(1.02);
 }
