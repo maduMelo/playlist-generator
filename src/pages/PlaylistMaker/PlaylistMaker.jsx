@@ -8,6 +8,7 @@ import addLogo from '../../assets/add.png';
 
 import TrackPreview from './components/TrackPreview';
 import TrackOnPlaylist from './components/TrackOnPlaylist';
+import Button from '../../components/Button';
 
 import spotifyControllers from '../../controllers/spotifyControllers';
 
@@ -23,6 +24,7 @@ function PlaylistMaker() {
 
     const [playlist, setPlaylist] = useState([]);
     const [playlistID, setPlaylistID] = useState(null);
+    const [playlistName, setPlaylistName] = useState('');
 
 
     // Montando o monstrinho
@@ -46,12 +48,11 @@ function PlaylistMaker() {
 
         // List of tracks (objects)
         setSuggestedTracks(suggestedTracksList.flat());
-        console.log('Gerou sugestões!');
     };
 
     async function createPlaylist() {
         const body = {
-            name: 'Mulher, pelo amor de Deus...',
+            name: playlistName ? playlistName : 'My Playlist',
             description: 'Playlist created by Playlist Maker',
             public: true
         };
@@ -77,6 +78,10 @@ function PlaylistMaker() {
     const handleKeyDown = (event) => {
         if (event.key === 'ArrowRight') document.getElementById('add').click();
         else if (event.key === 'ArrowLeft') document.getElementById('reject').click();
+    };
+
+    const handleNameInput = (event) => {
+        setPlaylistName(event.target.value);
     };
 
     useEffect(() => {
@@ -115,11 +120,15 @@ function PlaylistMaker() {
             </div>
             
             <div className='playlist-maker-right'>
-                <input type="text" />
+                <input type="text" className='playlist-name-input'
+                    placeholder='Give your playlist a name...'
+                    onChange={handleNameInput}
+                    value={playlistName}
+                />
 
                 {
                     playlist.length > 0 && !isPlaylistDone &&
-                    <button onClick={createPlaylist}>Create Playlist</button>
+                    <button onClick={createPlaylist} className='create-playlist-button'>Create Playlist</button>
                 }
 
                 {

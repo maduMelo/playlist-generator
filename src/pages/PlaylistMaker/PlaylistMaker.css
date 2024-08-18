@@ -14,9 +14,12 @@
     justify-content: start;
 
     width: 22vw;
-    height: 90%;
+    height: 80%;
 
     overflow: scroll;
+
+    flex: 1;
+
 }
 
 .playlist-container::-webkit-scrollbar {
@@ -24,15 +27,14 @@
 }
 
 .playlist-maker-center {
-
     display: flex;
     flex-direction: column;
     align-items: center;
-    justify-content: center;
+    justify-content: space-between;
 
     height: 90%;
 
-    flex: 3;
+    flex: 2;
 }
 
 .playilst-modifiers-container {
@@ -41,7 +43,7 @@
     justify-content: space-around;
 
     gap: .5rem;
-    margin: .5rem;
+    margin-bottom: 1.5rem;
 }
 
 #reject, #add {
@@ -85,7 +87,6 @@
 }
 
 .playlist-maker-right {
-    border: 1px solid lightblue;
 
     height: 90%;
 
@@ -95,4 +96,49 @@
     justify-content: center;
 
     flex: 1;
+
+    margin-right: 0rem;
+}
+
+.playlist-name-input {
+    outline: none;
+    border: none;
+
+    width: 70%;
+    margin-right: 3rem;
+    margin-bottom: 1rem;
+
+    background-color: #1f1f1f;
+    color: white;
+    caret-color: #1ed760;
+    border-bottom: 1px solid #1ed760;
+    border-radius: 5px;
+
+    padding: 1rem;
+}
+
+.create-playlist-button {
+    background-color: #1f1f1f;
+    border: none;
+    border-radius: 5px;
+
+    margin-right: 3rem;
+    padding: .8rem 1.2rem;
+
+    color: white;
+
+    cursor: pointer;
+}
+
+.create-playlist-button:hover {
+    background-color: #282828;
+}
+
+.playlist-maker-right a {
+    color: white;
+    margin-right: 3rem;
+}
+
+.playlist-maker-right a:hover {
+    color: #1ed760;
 }
