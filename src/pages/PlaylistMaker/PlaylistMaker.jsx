@@ -85,7 +85,7 @@ function PlaylistMaker() {
     };
 
     useEffect(() => {
-        //getTracksSuggestions();
+        getTracksSuggestions();
 
         window.addEventListener('keydown', handleKeyDown);
         return () => {
