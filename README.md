@@ -4,10 +4,6 @@
 |------------------------------|------------------------------|
 | Reference on Figma  | Current situation   |
 
-| ![Imagem 1](./ImageGallery/reference.png) | ![Imagem 2](./ImageGallery/maker.png) |
-|------------------------------|------------------------------|
-| Descrição 1                  | Descrição 2                  |
-
 
 Project in progress, already working:
 - Authorization through Spotify
