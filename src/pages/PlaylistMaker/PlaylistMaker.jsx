@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
+import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import './PlaylistMaker.css';
 import './components/TrackOnPlaylist.css';
@@ -21,6 +22,7 @@ function PlaylistMaker() {
 
     const [suggestedTracks, setSuggestedTracks] = useState([]); // State to store the suggested tracks
     const [isPlaylistDone, setIsPlaylistDone] = useState(false); // State to tell if the suggetions are ready
+    const [direction, setDirection] = useState('left'); // State to control the direction of the card swipe
 
     const [playlist, setPlaylist] = useState([]);
     const [playlistID, setPlaylistID] = useState(null);
@@ -66,13 +68,22 @@ function PlaylistMaker() {
     };
     
     const addTrackOnPlaylist = () => {
-        const track = suggestedTracks[0];
-        setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
-        setPlaylist(prevPlaylist => [...prevPlaylist, track]);
+        setDirection('right');
+
+        setTimeout(() => {
+            const track = suggestedTracks[0];
+            setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
+            setPlaylist(prevPlaylist => [...prevPlaylist, track]);
+        }, 2);
+        
     };
 
     const rejectTrack = () => {
-        setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
+        setDirection('left');
+
+        setTimeout(() => {
+            setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
+        }, 2);
     };
 
     const handleKeyDown = (event) => {
@@ -85,7 +96,7 @@ function PlaylistMaker() {
     };
 
     useEffect(() => {
-        getTracksSuggestions();
+        //getTracksSuggestions();
 
         window.addEventListener('keydown', handleKeyDown);
         return () => {
@@ -103,11 +114,24 @@ function PlaylistMaker() {
             <div className='playlist-maker-center'>
                 <h1>Playlist Maker Page</h1>
 
-                {
-                    suggestedTracks.length > 0 ?
-                    <TrackPreview track={suggestedTracks[0]} /> :
-                    <p>Searching for tracks you might like it...</p>
-                }
+                <div className='animation-container'>
+                    <TransitionGroup>
+                        {
+                            suggestedTracks.length > 0 &&
+                            <CSSTransition
+                                key={suggestedTracks[0].id}
+                                timeout={500}
+                                classNames={direction}
+                            >
+                                <div className='animation-card'>
+                                    <TrackPreview track={suggestedTracks[0]} />
+                                </div>
+                                
+                            </CSSTransition>
+                        }
+                    </TransitionGroup>
+                </div>
+                    
 
                 <div className='playilst-modifiers-container'>
                     <button onClick={rejectTrack} id='reject'>

@@ -46,7 +46,8 @@
     margin-bottom: 1.5rem;
 }
 
-#reject, #add {
+#reject,
+#add {
     border: none;
     border-radius: 50%;
 
@@ -64,13 +65,14 @@
     transform: scale(1.04);
 }
 
-#add:active, #reject:active {
+#add:active,
+#reject:active {
     transform: scale(.95);
 }
 
 #reject {
     display: flex;
-    padding: .6rem ;
+    padding: .6rem;
 }
 
 #reject img {
@@ -141,4 +143,63 @@
 
 .playlist-maker-right a:hover {
     color: #1ed760;
+}
+
+
+@keyframes swipeLeft {
+    from {
+        transform: translateX(0) rotate(0deg);
+        /* Inicia na posição original */
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(-100%) rotate(-30deg);
+        /* Desliza para a direita */
+        opacity: 0;
+    }
+}
+
+@keyframes swipeRight {
+    from {
+        transform: translateX(0) rotate(0deg);
+        /* Inicia na posição original */
+        opacity: 1;
+    }
+
+    to {
+        transform: translateX(100%) rotate(30deg);
+        /* Desliza para a direita */
+        opacity: 0;
+    }
+}
+
+.left-exit {
+    animation: swipeLeft .5s forwards;
+    /* Aplica a animação de swipe ao sair */
+}
+
+.right-exit {
+    animation: swipeRight .5s forwards;
+    /* Aplica a animação de swipe ao sair */
+}
+
+.left-enter,
+.right-enter {
+    opacity: 0;
+    /* Mantém o card invisível antes da animação */
+    animation-delay: .5s;
+    /* Atraso de 1 segundo */
+    animation-fill-mode: forwards;
+    /* Mantém o estado final da animação */
+}
+
+.animation-container {
+    height: 55.5vh;
+    width: 18.5vw;
+    position: relative;
+}
+
+.animation-card {
+    position: absolute;
 }
