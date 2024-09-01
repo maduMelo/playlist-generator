@@ -1,0 +1,35 @@
+
+.gradient {
+    height: 100vh;
+    width: 100vw;
+
+    background: linear-gradient(180deg, #7D2F95 0%, #121212 100%);
+    
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: start;
+}
+
+.gradient h1 {
+    font-size: 3.5rem;
+    font-weight: bold;
+
+    margin-top: 0;
+    margin-bottom: 0;
+    margin-left: 5%;
+}
+
+.gradient p {
+    margin-left: 5%;
+}
+
+.button-container {
+    height: 30vh;
+
+    display: flex;
+    align-items: center;
+    justify-content: start;
+
+    margin-left: 5%;
+}
