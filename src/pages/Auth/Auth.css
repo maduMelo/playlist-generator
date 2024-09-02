@@ -12,7 +12,7 @@
 }
 
 .gradient h1 {
-    font-size: 3.5rem;
+    font-size: 4.5rem;
     font-weight: bold;
 
     margin-top: 0;
@@ -21,7 +21,8 @@
 }
 
 .gradient p {
-    margin-left: 5%;
+    font-size: 1.2rem;
+    margin-left: 5.3%;
 }
 
 .button-container {
@@ -29,7 +30,7 @@
 
     display: flex;
     align-items: center;
-    justify-content: start;
 
-    margin-left: 5%;
+    margin-top: 3%;
+    margin-left: 5.3%;
 }

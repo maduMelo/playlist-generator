@@ -1,0 +1,39 @@
+.user-container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding: .8rem;
+    border-radius: 6px;
+    margin: 1rem;
+
+    gap: 1rem;
+
+    border: 1px dashed rgba(255, 255, 255, 0.1);
+}
+
+.user-container img {
+    width: 3rem;
+    height: 3rem;
+
+    border-radius: 50%;
+    object-fit: cover;
+
+    padding: .6rem;
+    background-color: rgba(255, 255, 255, 0.055);
+
+    transition: all .2s ease-in-out;
+    
+}
+
+.user-container img:hover {
+    transform: scale(1.1);
+}
+
+.user-container h3, .user-container p {
+    margin: 0;
+}
+
+.user-container p {
+    font-size: small;
+}

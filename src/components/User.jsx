@@ -6,7 +6,7 @@ function User( { data } ) {
             <img src={data.images[1].url} alt={data.display_name} />
 
             <div>
-               <h1>{data.display_name}</h1>
+               <h3>{data.display_name}</h3>
                 <p>{data.email}</p> 
             </div>
             

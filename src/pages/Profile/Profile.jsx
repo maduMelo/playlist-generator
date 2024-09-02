@@ -5,7 +5,7 @@ import spotifyControllers from "../../controllers/spotifyControllers";
 
 import "./Profile.css";
 
-import User from "./components/User";
+import User from "../../components/User";
 import Button from "../../components/Button";
 
 
