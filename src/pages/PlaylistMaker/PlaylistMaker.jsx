@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useLocation } from 'react-router-dom';
+import React from 'react';
 
 import './PlaylistMaker.css';
 import './components/TrackOnPlaylist.css';
@@ -9,12 +8,9 @@ import MiddleSection from './MiddleSection';
 import RightSection from './RightSection';
 
 
-function PlaylistMaker() {
-    const location = useLocation();
-    const userID = location.state;
+function PlaylistMaker({ data }) {
     const accessToken = localStorage.getItem('access_token');
-
-    const [playlistContent, setPlaylistContent] = useState({ isDone: false, id: null, name: null, tracks: [] });
+    const [playlistContent, setPlaylistContent] = React.useState({ isDone: false, id: null, name: null, tracks: [] });
 
 
     return (
@@ -32,7 +28,7 @@ function PlaylistMaker() {
                 playlist={playlistContent}
                 setPlaylist={setPlaylistContent}
                 accessToken={accessToken}
-                userID={userID}
+                userInfo={data}
             />
         </div>
     );

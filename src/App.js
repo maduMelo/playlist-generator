@@ -17,7 +17,7 @@ function App() {
                     <Route path='/' element={<Auth />} />
                     <Route path='/callback' element={<Callback />} />
                     <Route path='/profile' element={<Profile />} />
-                    <Route path='/profile/app' element={<PlaylistMaker />} />
+                    <Route path='/app' element={<PlaylistMaker />} />
                 </Routes>
             </BrowserRouter>
         </div>

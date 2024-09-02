@@ -1,17 +1,23 @@
+import User from "../../components/User";
+
 import playlistMakerController from "../../controllers/playlistMakerController";
 
-export default function RightSection({ setPlaylist, playlist, accessToken, userID }) {
+export default function RightSection({ setPlaylist, playlist, accessToken, userInfo }) {
+
+    console.log(userInfo);
     
     const handleNameInput = (event) => {
         setPlaylist(prevPlaylist => ({ ...prevPlaylist, name: event.target.value }));
     };
 
     const handleCreatePlaylist = async () => {
-        await playlistMakerController.createPlaylistOnSpotify(accessToken, userID, playlist, setPlaylist);
+        await playlistMakerController.createPlaylistOnSpotify(accessToken, userInfo.id, playlist, setPlaylist);
     };
     
     return (
         <div className='playlist-maker-right'>
+            <User data={userInfo} />
+
             <input type="text" className='playlist-name-input'
                 placeholder='Give your playlist a name...'
                 onChange={handleNameInput}

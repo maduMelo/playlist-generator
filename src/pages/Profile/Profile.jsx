@@ -8,6 +8,8 @@ import "./Profile.css";
 import User from "../../components/User";
 import Button from "../../components/Button";
 
+import PlaylistMaker from "../PlaylistMaker/PlaylistMaker";
+
 
 function Profile() {
     const navigate = useNavigate();
@@ -20,16 +22,14 @@ function Profile() {
     }, [accessToken]);
 
     return (
-        <div>
-            {data ? <User data={data} /> : <p>Não gerou token</p>}
-
-            <Button 
-                text="Gerar Playlist" 
-                buttonClass="green" 
-                action={() => { navigate('/profile/app', { state: data.id }) }}
-            />
-        </div>
+        <>
+            { data ? <PlaylistMaker data={data} /> : <p>Não gerou token</p> }
+        </>
     );
 };
 
 export default Profile;
+
+
+// 
+// <button onClick={() => console.log(data)}>TESTE</button>
