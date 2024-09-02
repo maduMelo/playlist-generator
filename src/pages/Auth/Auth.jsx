@@ -2,7 +2,7 @@ import './Auth.css';
 
 import authControllers from '../../controllers/authController';
 
-import Button from '../../components/Button';
+import SpotifyButton from '../../components/SpotifyButton';
 
 
 function Auth() {
@@ -12,7 +12,7 @@ function Auth() {
                 <p>Log in to your account and start creating playlists how you never thought before.</p>
 
                 <div className='button-container'>
-                    <Button
+                    <SpotifyButton
                         text='Log in'
                         buttonClass='green'
                         action={authControllers.handleAuthorizationRequest}

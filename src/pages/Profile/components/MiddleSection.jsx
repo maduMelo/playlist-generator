@@ -1,12 +1,12 @@
 import React from 'react';
 import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
-import TrackPreview from './components/TrackPreview';
+import TrackPreview from '../../../components/TrackPreview';
 
-import playlistMakerController from '../../controllers/playlistMakerController';
+import playlistMakerController from '../../../controllers/playlistMakerController';
 
-import rejectLogo from '../../assets/reject.png';
-import addLogo from '../../assets/add.png';
+import rejectLogo from '../../../assets/reject.png';
+import addLogo from '../../../assets/add.png';
 
 
 export default function MiddleSection({ setPlaylist, accessToken }) {

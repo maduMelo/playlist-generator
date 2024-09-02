@@ -6,7 +6,7 @@ import './App.css';
 import Auth from './pages/Auth/Auth';
 import Callback from './pages/Callback';
 import Profile from './pages/Profile/Profile';
-import PlaylistMaker from './pages/PlaylistMaker/PlaylistMaker';
+import PlaylistMaker from './pages/Profile/PlaylistMaker';
 
 
 function App() {
@@ -16,8 +16,7 @@ function App() {
                 <Routes>
                     <Route path='/' element={<Auth />} />
                     <Route path='/callback' element={<Callback />} />
-                    <Route path='/profile' element={<Profile />} />
-                    <Route path='/app' element={<PlaylistMaker />} />
+                    <Route path='/app' element={<Profile />} />
                 </Routes>
             </BrowserRouter>
         </div>

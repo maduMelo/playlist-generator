@@ -1,11 +1,10 @@
 import React from 'react';
 
 import './PlaylistMaker.css';
-import './components/TrackOnPlaylist.css';
 
-import LeftSection from './LeftSection';
-import MiddleSection from './MiddleSection';
-import RightSection from './RightSection';
+import LeftSection from './components/LeftSection';
+import MiddleSection from './components/MiddleSection';
+import RightSection from './components/RightSection';
 
 
 function PlaylistMaker({ data }) {

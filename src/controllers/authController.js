@@ -58,7 +58,7 @@ const authControllers = {
 
             if (data.access_token) {
                 window.localStorage.setItem('access_token', data.access_token);
-                navigate('/profile');
+                navigate('/app');
             } else {
                 console.error('Failed to obtain access token', data);
             };

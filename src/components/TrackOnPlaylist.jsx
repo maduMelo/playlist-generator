@@ -1,3 +1,5 @@
+import './TrackOnPlaylist.css';
+
 function TrackOnPlaylist({ track, order }) {
     return (
         <div className='track-on-playlist'>

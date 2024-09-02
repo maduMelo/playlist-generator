@@ -1,4 +1,4 @@
-import TrackOnPlaylist from './components/TrackOnPlaylist';
+import TrackOnPlaylist from '../../../components/TrackOnPlaylist';
 
 export default function LeftSection({ playlist }) {
 

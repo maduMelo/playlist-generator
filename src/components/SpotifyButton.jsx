@@ -1,4 +1,4 @@
-import './GreenButton.css';
+import './SpotifyButton.css';
 
 function Button({ text, buttonClass, action }) {
     return (

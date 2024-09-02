@@ -1,19 +1,11 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
 import spotifyControllers from "../../controllers/spotifyControllers";
 
-import "./Profile.css";
-
-import User from "../../components/User";
-import Button from "../../components/Button";
-
-import PlaylistMaker from "../PlaylistMaker/PlaylistMaker";
+import PlaylistMaker from "./PlaylistMaker";
 
 
 function Profile() {
-    const navigate = useNavigate();
-
     const accessToken = localStorage.getItem('access_token');
     const [data, setData] = useState(null);
 
@@ -29,7 +21,3 @@ function Profile() {
 };
 
 export default Profile;
-
-
-// 
-// <button onClick={() => console.log(data)}>TESTE</button>

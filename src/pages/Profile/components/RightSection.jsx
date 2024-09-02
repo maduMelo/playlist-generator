@@ -1,6 +1,6 @@
-import User from "../../components/User";
+import User from "../../../components/User";
 
-import playlistMakerController from "../../controllers/playlistMakerController";
+import playlistMakerController from "../../../controllers/playlistMakerController";
 
 export default function RightSection({ setPlaylist, playlist, accessToken, userInfo }) {
 
