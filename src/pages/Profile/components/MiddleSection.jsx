@@ -24,12 +24,12 @@ export default function MiddleSection({ setPlaylist, accessToken }) {
             setPlaylist(prevPlaylistContent => ({
                 ...prevPlaylistContent, tracks: [...prevPlaylistContent.tracks, track]
             }));
-        }, 2);
+        }, 10);
     };
 
     const rejectTrack = () => {
         setDirection('left');
-        setTimeout(() => { setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1)) }, 2);
+        setTimeout(() => { setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1)) }, 10);
     };
 
     const handleKeyDown = (event) => {

@@ -35,11 +35,9 @@ function TrackPreview({ track }) {
         <div className="track-preview-container">
             <div className='img-player-container'>
                 <img src={track.album.images[1].url} alt={track.name} />
-                {
-                    isPlaying ? 
-                    <button className='play-button' onClick={handlePlay}>&#10073;&#10073;</button> : 
-                    <button className='play-button' onClick={handlePlay}>&#9654;</button>
-                }
+                <button className='play-button' onClick={handlePlay}>
+                    <span className="material-symbols-outlined">{isPlaying ? 'pause' : 'play_arrow'}</span>
+                </button>
             </div>
 
             <div className='track-info'>
