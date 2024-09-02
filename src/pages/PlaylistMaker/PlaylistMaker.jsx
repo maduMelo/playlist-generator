@@ -1,89 +1,41 @@
 import React, { useState, useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { CSSTransition, TransitionGroup } from 'react-transition-group';
 
 import './PlaylistMaker.css';
 import './components/TrackOnPlaylist.css';
-import rejectLogo from '../../assets/reject.png';
-import addLogo from '../../assets/add.png';
 
-import TrackPreview from './components/TrackPreview';
-import TrackOnPlaylist from './components/TrackOnPlaylist';
-import Button from '../../components/Button';
-
-import spotifyControllers from '../../controllers/spotifyControllers';
+import LeftSection from './LeftSection';
+import MiddleSection from './MiddleSection';
+import RightSection from './RightSection';
 
 
 function PlaylistMaker() {
     const location = useLocation();
     const userID = location.state;
-
     const accessToken = localStorage.getItem('access_token');
 
     const [suggestedTracks, setSuggestedTracks] = useState([]); // State to store the suggested tracks
-    const [isPlaylistDone, setIsPlaylistDone] = useState(false); // State to tell if the suggetions are ready
     const [direction, setDirection] = useState('left'); // State to control the direction of the card swipe
-
-    const [playlist, setPlaylist] = useState([]);
-    const [playlistID, setPlaylistID] = useState(null);
-    const [playlistName, setPlaylistName] = useState('');
+    const [playlistContent, setPlaylistContent] = useState({ isDone: false, id: null, name: null, tracks: [] });
 
 
-    // Montando o monstrinho
-    async function getTracksSuggestions() {
-        // 3 artists
-        const myArtistsIDs = await spotifyControllers.getFollowedArtists(accessToken);
-
-        const relatedArtistsPromises = await myArtistsIDs.map(async artistID => {
-            return await spotifyControllers.getRelatedArtists(accessToken, artistID);
-        });
-
-        // 3 arrays with 5 artists each
-        const relatedArtists = await Promise.all(relatedArtistsPromises); // add error handling
-
-        const recommendationsPromises = relatedArtists.map(async (relatedArtistsIDs) => {
-            return await spotifyControllers.getRecommendations(accessToken, relatedArtistsIDs.join(','), '', '');
-        });
-
-        // 3 arrays with the objetc of the tracks that have preview url
-        const suggestedTracksList = await Promise.all(recommendationsPromises); // add error handling
-
-        // List of tracks (objects)
-        setSuggestedTracks(suggestedTracksList.flat());
-    };
-
-    async function createPlaylist() {
-        const body = {
-            name: playlistName ? playlistName : 'My Playlist',
-            description: 'Playlist created by Playlist Maker',
-            public: true
-        };
-        const playlistID = await spotifyControllers.createPlaylist(accessToken, userID, body);
-        
-        const tracksIDs = playlist.map(track => `spotify:track:${track.id}`);
-        await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksIDs);
-        
-        setPlaylistID(playlistID);
-        setIsPlaylistDone(true);
-    };
-    
     const addTrackOnPlaylist = () => {
+        const track = suggestedTracks[0];
         setDirection('right');
 
         setTimeout(() => {
-            const track = suggestedTracks[0];
             setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
-            setPlaylist(prevPlaylist => [...prevPlaylist, track]);
+
+            setPlaylistContent(prevPlaylistContent => ({
+                ...prevPlaylistContent, tracks: [...prevPlaylistContent.tracks, track]
+            }));
         }, 2);
-        
+
     };
 
     const rejectTrack = () => {
         setDirection('left');
-
-        setTimeout(() => {
-            setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1));
-        }, 2);
+        setTimeout(() => { setSuggestedTracks(prevSeggestions => prevSeggestions.slice(1)) }, 2);
     };
 
     const handleKeyDown = (event) => {
@@ -91,78 +43,32 @@ function PlaylistMaker() {
         else if (event.key === 'ArrowLeft') document.getElementById('reject').click();
     };
 
-    const handleNameInput = (event) => {
-        setPlaylistName(event.target.value);
-    };
-
     useEffect(() => {
-        //getTracksSuggestions();
+        //playlistMakerController.getTracksSuggestions(accessToken, setSuggestedTracks);
 
         window.addEventListener('keydown', handleKeyDown);
-        return () => {
-            window.removeEventListener('keydown', handleKeyDown);
-        };
+        return () => { window.removeEventListener('keydown', handleKeyDown) };
     }, []);
 
     return (
         <div className='playlist-maker-container'>
+            <LeftSection
+                playlist={playlistContent}
+            />
 
-            <div className='playlist-container'>
-                { playlist.map((track, index) =>  <TrackOnPlaylist key={index} order={index} track={track} />) }
-            </div>
+            <MiddleSection
+                suggestedTracks={suggestedTracks}
+                rejectTrack={rejectTrack}
+                addTrackOnPlaylist={addTrackOnPlaylist}
+                direction={direction}
+            />
 
-            <div className='playlist-maker-center'>
-                <h1>Playlist Maker Page</h1>
-
-                <div className='animation-container'>
-                    <TransitionGroup>
-                        {
-                            suggestedTracks.length > 0 &&
-                            <CSSTransition
-                                key={suggestedTracks[0].id}
-                                timeout={500}
-                                classNames={direction}
-                            >
-                                <div className='animation-card'>
-                                    <TrackPreview track={suggestedTracks[0]} />
-                                </div>
-                                
-                            </CSSTransition>
-                        }
-                    </TransitionGroup>
-                </div>
-                    
-
-                <div className='playilst-modifiers-container'>
-                    <button onClick={rejectTrack} id='reject'>
-                        <img src={rejectLogo} alt="Reject" />
-                    </button>
-                    <button onClick={addTrackOnPlaylist} id='add'>
-                        <img src={addLogo} alt="Add" />
-                    </button>
-                </div>
-            </div>
-            
-            <div className='playlist-maker-right'>
-                <input type="text" className='playlist-name-input'
-                    placeholder='Give your playlist a name...'
-                    onChange={handleNameInput}
-                    value={playlistName}
-                />
-
-                {
-                    playlist.length > 0 && !isPlaylistDone &&
-                    <button onClick={createPlaylist} className='create-playlist-button'>Create Playlist</button>
-                }
-
-                {
-                    isPlaylistDone &&
-                    <a href={`https://open.spotify.com/playlist/${playlistID}`} target="_blank" rel="noopener noreferrer">
-                        Go to Playlist
-                    </a>
-                }
-            </div>
-            
+            <RightSection
+                playlist={playlistContent}
+                setPlaylist={setPlaylistContent}
+                accessToken={accessToken}
+                userID={userID}
+            />
         </div>
     );
 };
