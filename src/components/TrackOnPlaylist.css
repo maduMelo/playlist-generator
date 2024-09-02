@@ -38,3 +38,31 @@
 .track-on-playlist p {
     font-size: .8rem;
 }
+
+.delete-track-container {
+    width: 8%;
+    height: 40%;
+
+    display: flex;
+}
+
+.delete-track {
+    background-color: transparent;
+    border: none;
+    color: #999999;
+    
+    cursor: pointer;
+    display: none;
+}
+
+.material-symbols-outlined {
+    font-size: 1.4rem;
+}
+
+.track-on-playlist:hover .delete-track {
+    display: block;
+}
+.delete-track:hover {
+    color: white;
+    transform: scale(1.03);
+}

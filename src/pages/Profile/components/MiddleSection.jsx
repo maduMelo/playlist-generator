@@ -11,8 +11,8 @@ import addLogo from '../../../assets/add.png';
 
 export default function MiddleSection({ setPlaylist, accessToken }) {
 
-    const [suggestedTracks, setSuggestedTracks] = React.useState([]); // State to store the suggested tracks
-    const [direction, setDirection] = React.useState('left'); // State to control the direction of the card swipe
+    const [suggestedTracks, setSuggestedTracks] = React.useState([]);
+    const [direction, setDirection] = React.useState('left');
 
     const addTrackOnPlaylist = () => {
         const track = suggestedTracks[0];
@@ -38,7 +38,7 @@ export default function MiddleSection({ setPlaylist, accessToken }) {
     };
 
     React.useEffect(() => {
-        //playlistMakerController.getTracksSuggestions(accessToken, setSuggestedTracks);
+       //playlistMakerController.getTracksSuggestions(accessToken, setSuggestedTracks);
 
         window.addEventListener('keydown', handleKeyDown);
         return () => { window.removeEventListener('keydown', handleKeyDown) };
