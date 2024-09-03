@@ -6,7 +6,6 @@ import './App.css';
 import Auth from './pages/Auth/Auth';
 import Callback from './pages/Callback';
 import Profile from './pages/Profile/Profile';
-import PlaylistMaker from './pages/Profile/PlaylistMaker';
 
 
 function App() {

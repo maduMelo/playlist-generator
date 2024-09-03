@@ -1,0 +1,70 @@
+.strawberries {
+    color: #EE091E;
+    background-color: #F8BDC1;
+}
+
+.bananas {
+    color: #A17101;
+    background-color: #FAD451;
+}
+
+.grapes {
+    color: #321140;
+    background-color: #8F6897;
+}
+
+.avocados {
+    color: #32230B;
+    background-color: #8F9B37;
+}
+
+.fruit-button-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    gap: 1rem;
+}
+
+.fruit-button {
+    width: 7.5rem;
+    height: 3.6rem;
+
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+
+    border-radius: 50px 8px 8px 50px;
+
+    border: none;
+    cursor: pointer;
+}
+
+.fruit-button:hover {
+    transform: scale(1.04);
+}
+
+.fruit-button:active {
+    transform: scale(1);
+}
+
+.img-container {
+    width: 3.1rem;
+    height: 3.1rem;
+
+    border-radius: 50%;
+    overflow: hidden;
+
+    background-color: yellow;
+}
+
+.img-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.more-songs {
+    font-weight: 600;
+    font-size: .9rem;
+    line-height: 12px;
+}

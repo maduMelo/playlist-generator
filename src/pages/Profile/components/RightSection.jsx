@@ -1,4 +1,5 @@
 import User from "../../../components/User";
+import ButtonsGrid from "../../../components/ButtonsGrid";
 
 import playlistMakerController from "../../../controllers/playlistMakerController";
 
@@ -17,6 +18,8 @@ export default function RightSection({ setPlaylist, playlist, accessToken, userI
     return (
         <div className='playlist-maker-right'>
             <User data={userInfo} />
+
+            <ButtonsGrid />
 
             <input type="text" className='playlist-name-input'
                 placeholder='Give your playlist a name...'
