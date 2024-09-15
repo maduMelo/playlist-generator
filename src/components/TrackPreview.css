@@ -38,6 +38,12 @@
 
     word-wrap: break-word;
     white-space: normal;
+
+    display: -webkit-box;
+    -webkit-line-clamp: 2; /* Define o número máximo de linhas */
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    text-overflow: ellipsis;
 }
 
 .track-artists {
