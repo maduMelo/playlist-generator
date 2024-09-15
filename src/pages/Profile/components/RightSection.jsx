@@ -4,8 +4,6 @@ import ButtonsGrid from "../../../components/ButtonsGrid";
 import playlistMakerController from "../../../controllers/playlistMakerController";
 
 export default function RightSection({ setPlaylist, playlist, accessToken, userInfo }) {
-
-    console.log(userInfo);
     
     const handleNameInput = (event) => {
         setPlaylist(prevPlaylist => ({ ...prevPlaylist, name: event.target.value }));
