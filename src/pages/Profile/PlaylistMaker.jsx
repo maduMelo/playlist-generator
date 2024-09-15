@@ -10,6 +10,7 @@ import RightSection from './components/RightSection';
 function PlaylistMaker({ data }) {
     
     const accessToken = localStorage.getItem('access_token');
+    const [suggestedTracks, setSuggestedTracks] = React.useState([]);
     const [playlistContent, setPlaylistContent] = React.useState({ isDone: false, id: null, name: null, tracks: [] });
 
     return (
@@ -20,6 +21,8 @@ function PlaylistMaker({ data }) {
             />
 
             <MiddleSection
+                suggestedTracks={suggestedTracks}
+                setSuggestedTracks={setSuggestedTracks}
                 setPlaylist={setPlaylistContent}
                 accessToken={accessToken}
             />
@@ -27,6 +30,7 @@ function PlaylistMaker({ data }) {
             <RightSection
                 playlist={playlistContent}
                 setPlaylist={setPlaylistContent}
+                setSuggestedTracks={setSuggestedTracks}
                 accessToken={accessToken}
                 userInfo={data}
             />

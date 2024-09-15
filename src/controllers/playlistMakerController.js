@@ -35,9 +35,6 @@ const playlistMakerController = {
         const tracksIDs = playlistContent.tracks.map(track => `spotify:track:${track.id}`); // Here
         await spotifyControllers.addTracksOnPlaylist(accessToken, playlistID, tracksIDs);
 
-        //setPlaylistID(playlistID); // Here
-        //setIsPlaylistDone(true); // Here
-
         setPlaylistContent(prevContent => ({ ...prevContent, isDone: true, id: playlistID })); // Here changed
     },
 };

@@ -9,9 +9,9 @@ import rejectLogo from '../../../assets/reject.png';
 import addLogo from '../../../assets/add.png';
 
 
-export default function MiddleSection({ setPlaylist, accessToken }) {
+export default function MiddleSection({ setPlaylist, accessToken, suggestedTracks, setSuggestedTracks }) {
 
-    const [suggestedTracks, setSuggestedTracks] = React.useState([]);
+    
     const [direction, setDirection] = React.useState('left');
 
     const addTrackOnPlaylist = () => {

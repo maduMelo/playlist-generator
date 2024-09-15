@@ -1,6 +1,10 @@
 const spotifyServices = {
-    GETRequest: async (accessToken, url) => {
-        const response = await fetch(url, {
+    GETRequest: async (accessToken, url, params) => {
+        const urlWithParams = new URL(url);
+        Object.keys(params).forEach(key => urlWithParams.searchParams.append(key, params[key]));
+
+        const response = await fetch(urlWithParams, {
+            method: 'GET',
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }

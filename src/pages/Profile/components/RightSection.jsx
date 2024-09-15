@@ -3,7 +3,7 @@ import ButtonsGrid from "../../../components/ButtonsGrid";
 
 import playlistMakerController from "../../../controllers/playlistMakerController";
 
-export default function RightSection({ setPlaylist, playlist, accessToken, userInfo }) {
+export default function RightSection({ setPlaylist, playlist, setSuggestedTracks, accessToken, userInfo }) {
     
     const handleNameInput = (event) => {
         setPlaylist(prevPlaylist => ({ ...prevPlaylist, name: event.target.value }));
@@ -17,7 +17,7 @@ export default function RightSection({ setPlaylist, playlist, accessToken, userI
         <div className='playlist-maker-right'>
             <User data={userInfo} />
 
-            <ButtonsGrid />
+            <ButtonsGrid setSuggestedTracks={setSuggestedTracks} />
 
             <input type="text" className='playlist-name-input'
                 placeholder='Give your playlist a name...'
