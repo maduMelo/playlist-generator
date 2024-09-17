@@ -22,7 +22,7 @@ export default function RightSection({ setPlaylist, playlist, setSuggestedTracks
             <input type="text" className='playlist-name-input'
                 placeholder='Give your playlist a name...'
                 onChange={handleNameInput}
-                value={playlist.name}
+                value={playlist.name ? playlist.name : ''}
             />
 
             {

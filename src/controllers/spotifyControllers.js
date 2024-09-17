@@ -73,6 +73,18 @@ const spotifyControllers = {
         catch (error) { console.error(`Failed to get top ${type}`, error) };
     },
 
+    getMySavedTracks: async (accessToken, params) => {
+        const url = 'https://api.spotify.com/v1/me/tracks';
+
+        try {
+            const data = await spotifyServices.GETRequest(accessToken, url, params);
+            //const IDs = data.items.map(track => track.track.id);
+            //return IDs;
+            return data;
+        }
+        catch (error) { console.error('Failed to get saved tracks', error) };
+    },
+
     getRelatedArtists: async (accessToken, artistID) => {
         const url = `https://api.spotify.com/v1/artists/${artistID}/related-artists`;
 
