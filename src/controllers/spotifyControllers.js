@@ -67,8 +67,7 @@ const spotifyControllers = {
 
         try {
             const data = await spotifyServices.GETRequest(accessToken, url, params);
-            const IDs = data.items.map(track => track.id);
-            return IDs;
+            return data.items;
         }
         catch (error) { console.error(`Failed to get top ${type}`, error) };
     },

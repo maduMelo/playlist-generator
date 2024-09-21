@@ -11,6 +11,7 @@ import bananas from '../assets/bananas.png';
 export default function ButtonsGrid({ setSuggestedTracks }) {
     const accessToken = localStorage.getItem('access_token');
     const [bananaOffset, setBananaOffset] = React.useState(0);
+    const [grapeOffset, setGrapeOffset] = React.useState(0);
 
     const clickStrawberry = () => fruitButtonsController.strawberrySearch(accessToken, setSuggestedTracks);
 
@@ -22,7 +23,11 @@ export default function ButtonsGrid({ setSuggestedTracks }) {
 
     const clickAvocado = () => fruitButtonsController.avocadoSearch(accessToken, setSuggestedTracks);
 
-    const clickGrape = () => fruitButtonsController.grapeSearch(accessToken, setSuggestedTracks);
+    const clickGrape = () => {
+        const params = { limit: 15, offset: grapeOffset };
+        fruitButtonsController.grapeSearch(accessToken, setSuggestedTracks, params);
+        setGrapeOffset(grapeOffset + 5);
+    };
 
     return (
         <div className='fruit-button-grid'>

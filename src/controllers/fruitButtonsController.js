@@ -7,9 +7,11 @@ const fruitButtonsController = {
 
     bananaSearch: async (accessToken, setSuggestedTracks, params) => {
         const myTops = await spotifyControllers.getMyTops(accessToken, params, 'tracks');
-        const newTracks = await spotifyControllers.getRecommendations(accessToken, '', '', myTops.join(','));
+        const myTopsIDs = myTops.map(track => track.id);
+        
+        const newTracks = await spotifyControllers.getRecommendations(accessToken, '', '', myTopsIDs.join(','));
         setSuggestedTracks(prevTracks => [...prevTracks, ...newTracks]);
-    },
+    },    
 
     avocadoSearch: async (accessToken, setSuggestedTracks) => {
         const response = await spotifyControllers.getMySavedTracks(accessToken, { limit: 1 });
@@ -35,8 +37,21 @@ const fruitButtonsController = {
         setSuggestedTracks(prevTracks => [...prevTracks, ...newTracks, ...moreNewTracks]);
     },
 
-    grapeSearch: async (accessToken, setSuggestedTracks) => {
-        console.log('grapeSearch');
+    grapeSearch: async (accessToken, setSuggestedTracks, params) => {
+        const myTops = await spotifyControllers.getMyTops(accessToken, params, 'artists');
+        
+        let seedGenres = [];
+        for (let i = 0; i < myTops.length; i++) {
+            const randomIndex = Math.floor(Math.random() * myTops.length);
+
+            for (let j = 0; j < myTops[randomIndex].genres.length; j++) {
+                if (seedGenres.length >= 5) break;
+                if (!seedGenres.includes(myTops[randomIndex].genres[j])) seedGenres.push(myTops[randomIndex].genres[j]);
+            };
+        };
+
+        const newTracks = await spotifyControllers.getRecommendations(accessToken, '', seedGenres.join(','), '');
+        setSuggestedTracks(prevTracks => [...prevTracks, ...newTracks]);
     }
 };
 
