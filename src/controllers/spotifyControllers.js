@@ -41,12 +41,12 @@ const spotifyControllers = {
         catch (error) { console.error('Failed to get track', error) };
     },
 
-    getFollowedArtists: async (accessToken) => {
+    getFollowedArtists: async (accessToken, params) => {
         const url = 'https://api.spotify.com/v1/me/following?type=artist';
 
         try {
-            const data = await spotifyServices.GETRequest(accessToken, url, {});
-            return data.artists.items.slice(4, 7).map(artist => artist.id);
+            const data = await spotifyServices.GETRequest(accessToken, url, params);
+            return data.artists;
         }
         catch (error) { console.error('Failed to get followed artists', error) };
     },
@@ -77,8 +77,6 @@ const spotifyControllers = {
 
         try {
             const data = await spotifyServices.GETRequest(accessToken, url, params);
-            //const IDs = data.items.map(track => track.track.id);
-            //return IDs;
             return data;
         }
         catch (error) { console.error('Failed to get saved tracks', error) };

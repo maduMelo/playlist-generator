@@ -2,7 +2,18 @@ import spotifyControllers from "./spotifyControllers";
 
 const fruitButtonsController = {
     strawberrySearch: async (accessToken, setSuggestedTracks) => {
-        console.log('strawberrySearch');
+        const followedArtists = await spotifyControllers.getFollowedArtists(accessToken, { limit: 1 });
+        const totalArtists = followedArtists.total * 1;
+
+        const randomOffset = Math.floor(Math.random() * totalArtists);
+        const myArtists = await spotifyControllers.getFollowedArtists(accessToken, { limit: 50, offset: randomOffset });
+
+        const randomIndex = Math.floor(Math.random() * myArtists.items.length);
+        const relatedArtistsIDs = await spotifyControllers.getRelatedArtists(accessToken, myArtists.items[randomIndex].id);
+
+        const suggestions = await spotifyControllers.getRecommendations(accessToken, relatedArtistsIDs.join(','), '', '');
+
+        setSuggestedTracks(prevTracks => [...prevTracks, ...suggestions]);
     },
 
     bananaSearch: async (accessToken, setSuggestedTracks, params) => {
